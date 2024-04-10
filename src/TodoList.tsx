@@ -1,10 +1,16 @@
 import React from "react";
 
+export type TaskType = {
+    id: number
+    title: string
+    isDone: boolean
+}
 type PropsType = {
     title: string
+    tasks: Array<TaskType>
 }
 
-export function TodoList(props: PropsType) {
+export function TodoList(props: PropsType) { // props = {title: "", tasks}
     return (
         <div>
             <h3>{props.title}</h3>
@@ -13,9 +19,9 @@ export function TodoList(props: PropsType) {
                 <button>+</button>
             </div>
             <ul>
-                <li><input type={"checkbox"} checked={true}/>HTML + CSS</li>
-                <li><input type={"checkbox"} checked={true}/>JS</li>
-                <li><input type={"checkbox"} checked={false}/>React + TS</li>
+                <li><input type={"checkbox"} checked={props.tasks[0].isDone}/>{props.tasks[0].title}</li>
+                <li><input type={"checkbox"} checked={props.tasks[1].isDone}/>{props.tasks[1].title}</li>
+                <li><input type={"checkbox"} checked={props.tasks[2].isDone}/>{props.tasks[2].title}</li>
             </ul>
             <div>
                 <button>All</button>
