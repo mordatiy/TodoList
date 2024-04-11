@@ -14,7 +14,7 @@ function App() {
         { id :4, title: "Redux", isDone: false },
     ]
     let [tasks, setTasks] = useState<Array<TaskType>>(initTasks1);
-    let [filer, setFilter] = useState<FilterValuesType>("completed");
+    let [filer, setFilter] = useState<FilterValuesType>("all");
 
     // let tasks2: Array<TaskType> = [
     //     { id :1, title: "The Matrix", isDone: false },
