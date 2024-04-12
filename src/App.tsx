@@ -32,6 +32,12 @@ function App() {
         // console.log(initTasks1)
     }
 
+    function addTask(newTaskTitle: string) {
+        let newTask = { id : v1(), title: newTaskTitle, isDone: false };
+        let newTasks = [newTask, ...tasks];
+        setTasks(newTasks);
+    }
+
     function changeFilter(value: FilterValuesType) {
         setFilter(value);
     }
@@ -51,10 +57,11 @@ function App() {
                       tasks={tasksForTodoList}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
+                      addTask={addTask}
             />
             {/*<TodoList title={"Movies"} tasks={tasks2}/>*/}
             {/*<TodoList title={"Songs"} />*/}
-            <Counter />
+            {/*<Counter />*/}
 
         </div>
     );
