@@ -66,6 +66,8 @@ function App() {
 
     }
 
+
+
     const todoListsId1 = v1();
     const todoListsId2 = v1();
 
@@ -73,6 +75,17 @@ function App() {
         {id: todoListsId1, name: "What to learn", filter: "all"},
         {id: todoListsId2, name: "What to learn", filter: "completed"},
     ])
+
+    let removeTodoList = (todoListId: string) => {
+        // debugger
+        // console.log(" removeTodoList"  + todoListId)
+        let clearTodoList = todoLists.filter( tl => tl.id !== todoListId);
+        setTodoList(clearTodoList);
+
+        delete tasksObj[todoListId];
+        setTasksObj({...tasksObj});
+    }
+
 
     let [tasksObj, setTasksObj] = useState({
         [todoListsId1]: [
@@ -116,6 +129,7 @@ function App() {
                                  addTask={addTask}
                                  changeTaskStatus={changeStatus}
                                  filter={tdl.filter}
+                                 removeTodoList={removeTodoList}
                 />
 
             })
