@@ -17,22 +17,6 @@ type TasksStateType = {
 
 function App() {
     //debugger
-    // let initTasks1: Array<TaskType> = [
-    //     {id: v1(), title: "HTML + CSS", isDone: true},
-    //     {id: v1(), title: "JS", isDone: true},
-    //     {id: v1(), title: "React + TS", isDone: false},
-    //     {id: v1(), title: "Redux", isDone: false},
-    //     {id: v1(), title: "GraphQL", isDone: false},
-    // ]
-    // let [tasks, setTasks] = useState<Array<TaskType>>([
-    //     {id: v1(), title: "HTML + CSS", isDone: true},
-    //     {id: v1(), title: "JS", isDone: true},
-    //     {id: v1(), title: "React + TS", isDone: false},
-    //     {id: v1(), title: "Redux", isDone: false},
-    //     {id: v1(), title: "GraphQL", isDone: false},
-    // ]);
-    // let [filter, setFilter] = useState<FilterValuesType>("all");
-
 
     function removeTask(id: string, todoListId: string) {
         tasksObj[todoListId] = tasksObj[todoListId].filter(item => item.id !== id);
@@ -49,7 +33,7 @@ function App() {
         }
     }
 
-    function changeStatus(taskId: string, isDone: boolean, todoListId: string) {
+    function changeTaskStatus(taskId: string, isDone: boolean, todoListId: string) {
         let tasks = tasksObj[todoListId];
         let task = tasks.find((t) => t.id === taskId);
         if (task) {
@@ -57,6 +41,15 @@ function App() {
             setTasksObj({...tasksObj})
         }
 
+    }
+    function changeTaskTitle(newTitle: string, taskId: string, todoListId: string) {
+        // alert("changeTaskTitle " + newTitle + " " + taskId + " " + todoListId );
+        let tasks = tasksObj[todoListId];
+        let task = tasks.find((t) => t.id === taskId);
+        if (task) {
+            task.title = newTitle;
+            setTasksObj({...tasksObj})
+        }
     }
 
     function changeFilter(value: FilterValuesType, todoListID: string) {
@@ -76,7 +69,7 @@ function App() {
 
     let [todoLists, setTodoList] = useState<Array<TodoListType>>([
         {id: todoListsId1, name: "What to learn", filter: "all"},
-        {id: todoListsId2, name: "What to learn", filter: "all"},
+        {id: todoListsId2, name: "What to buy", filter: "all"},
     ])
 
     let removeTodoList = (todoListId: string) => {
@@ -88,6 +81,31 @@ function App() {
         delete tasksObj[todoListId];
         setTasksObj({...tasksObj});
     }
+
+    let changeTodoListName = (newTitle: string, todoListId: string) => {
+        // let tasks = tasksObj[todoListId];
+        let todoList = todoLists.find( (tl) =>  tl.id === todoListId);
+        if (todoList) {
+            todoList.name = newTitle;
+            setTodoList([...todoLists]);
+        }
+    }
+
+    function addTodoList (title: string) {
+        // let newTodoListID = v1();
+        let newTodoList: TodoListType = {
+            id: v1(),
+            name: title,
+            filter: "all"
+        };
+        setTodoList([newTodoList, ...todoLists]);
+        setTasksObj({
+            ...tasksObj,
+            [newTodoList.id] : []
+        })
+    }
+
+
 
 
     let [tasksObj, setTasksObj] = useState<TasksStateType>({
@@ -107,21 +125,6 @@ function App() {
         ],
 
     })
-
-    function addTodoList (title: string) {
-        // let newTodoListID = v1();
-        let newTodoList: TodoListType = {
-            id: v1(),
-            name: title,
-            filter: "all"
-        };
-        setTodoList([newTodoList, ...todoLists]);
-        setTasksObj({
-            ...tasksObj,
-            [newTodoList.id] : []
-        })
-    }
-
 
 
     return (
@@ -145,9 +148,11 @@ function App() {
                                  removeTask={removeTask}
                                  changeFilter={changeFilter}
                                  addTask={addTask}
-                                 changeTaskStatus={changeStatus}
+                                 changeTaskStatus={changeTaskStatus}
+                                 changeTaskTitle={changeTaskTitle}
                                  filter={tdl.filter}
                                  removeTodoList={removeTodoList}
+                                 changeTodoListName={changeTodoListName}
                 />
 
             })
