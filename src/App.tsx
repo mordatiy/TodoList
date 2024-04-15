@@ -130,7 +130,7 @@ function App() {
     return (
 
         <div className="App">
-            <AddItemForm addItem={ addTodoList }/>
+            <AddItemForm addItem={ addTodoList } itemLabel={"List Name"}/>
             {todoLists.map((tdl) => {
                 let tasksForTodoList = tasksObj[tdl.id];
                 if (tdl.filter === "completed") {
