@@ -55,12 +55,12 @@ export function TodoList(props: PropsType) { // props = {title: "", tasks: {}}
                 <EditableSpan title={props.title} onChange={changeTodoListName}/>
                 {/*<button onClick={removeTodoList}>x</button>*/}
                 <IconButton aria-label="delete" onClick={removeTodoList}>
-                    <DeleteIcon  />
+                    <DeleteIcon />
                 </IconButton>
             </h3>
             <AddItemForm addItem={addTask} itemLabel={"Task Name"}/>
             <div>
-                <ul>
+                <ul className={"task-list"}>
                     {
                         props.tasks.map(item => {
                                 const onRemoveHandler = () => {
@@ -99,7 +99,8 @@ export function TodoList(props: PropsType) { // props = {title: "", tasks: {}}
             <div>
                 <Button onClick={onClickAllHandler}
                         color={"inherit"}
-                        variant={props.filter === "all" ? "contained" : "text"}  className={props.filter === "all" ? "active-filter" : ""}>All
+                        variant={props.filter === "all" ? "contained" : "text"}
+                        className={props.filter === "all" ? "active-filter" : ""}>All
                 </Button>
                 <Button onClick={onClickActiveHandler}
                         color={"primary"}

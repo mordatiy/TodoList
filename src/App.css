@@ -1,10 +1,10 @@
 .App {
-    padding: 30px;
+    padding: 0px;
     display: flex;
     flex-wrap: wrap;
 }
 .App>div {
-    margin-right: 50px;
+    /*margin-right: 50px;*/
 }
 .error {
     border: 1px solid red;
@@ -18,4 +18,11 @@
 }
 .is-done {
     opacity: 0.6;
+}
+
+ul.task-list {
+    padding: 0;
+}
+ul.task-list>li {
+    list-style-type: none;
 }

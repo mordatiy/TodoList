@@ -4,6 +4,9 @@ import {TaskType, TodoList} from "./TodoList";
 import {Counter} from "./Counter";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
+import {AppBar, Button, Container, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import {Menu} from "@mui/icons-material";
 
 export type FilterValuesType = "all" | "completed" | "active";
 type TodoListType = {
@@ -42,6 +45,7 @@ function App() {
         }
 
     }
+
     function changeTaskTitle(newTitle: string, taskId: string, todoListId: string) {
         // alert("changeTaskTitle " + newTitle + " " + taskId + " " + todoListId );
         let tasks = tasksObj[todoListId];
@@ -54,14 +58,13 @@ function App() {
 
     function changeFilter(value: FilterValuesType, todoListID: string) {
         // setFilter(value);
-        let todoList = todoLists.find( (tl) =>  tl.id === todoListID)
+        let todoList = todoLists.find((tl) => tl.id === todoListID)
         if (todoList) {
             todoList.filter = value;
             setTodoList([...todoLists]);
         }
 
     }
-
 
 
     const todoListsId1 = v1();
@@ -75,7 +78,7 @@ function App() {
     let removeTodoList = (todoListId: string) => {
         // debugger
         // console.log(" removeTodoList"  + todoListId)
-        let clearTodoList = todoLists.filter( tl => tl.id !== todoListId);
+        let clearTodoList = todoLists.filter(tl => tl.id !== todoListId);
         setTodoList(clearTodoList);
 
         delete tasksObj[todoListId];
@@ -84,14 +87,14 @@ function App() {
 
     let changeTodoListName = (newTitle: string, todoListId: string) => {
         // let tasks = tasksObj[todoListId];
-        let todoList = todoLists.find( (tl) =>  tl.id === todoListId);
+        let todoList = todoLists.find((tl) => tl.id === todoListId);
         if (todoList) {
             todoList.name = newTitle;
             setTodoList([...todoLists]);
         }
     }
 
-    function addTodoList (title: string) {
+    function addTodoList(title: string) {
         // let newTodoListID = v1();
         let newTodoList: TodoListType = {
             id: v1(),
@@ -101,12 +104,9 @@ function App() {
         setTodoList([newTodoList, ...todoLists]);
         setTasksObj({
             ...tasksObj,
-            [newTodoList.id] : []
+            [newTodoList.id]: []
         })
     }
-
-
-
 
     let [tasksObj, setTasksObj] = useState<TasksStateType>({
         [todoListsId1]: [
@@ -130,33 +130,56 @@ function App() {
     return (
 
         <div className="App">
-            <AddItemForm addItem={ addTodoList } itemLabel={"List Name"}/>
-            {todoLists.map((tdl) => {
-                let tasksForTodoList = tasksObj[tdl.id];
-                if (tdl.filter === "completed") {
-                    tasksForTodoList = tasksForTodoList.filter(t => t.isDone === true)
-                }
-                if (tdl.filter === "active") {
-                    tasksForTodoList = tasksForTodoList.filter(t => t.isDone === false)
-                }
-                // console.log(tasksForTodoList);
 
-                return <TodoList key={tdl.id}
-                                 id={tdl.id}
-                                 title={tdl.name}
-                                 tasks={tasksForTodoList}
-                                 removeTask={removeTask}
-                                 changeFilter={changeFilter}
-                                 addTask={addTask}
-                                 changeTaskStatus={changeTaskStatus}
-                                 changeTaskTitle={changeTaskTitle}
-                                 filter={tdl.filter}
-                                 removeTodoList={removeTodoList}
-                                 changeTodoListName={changeTodoListName}
-                />
+            <AppBar position={"static"}>
+                <Toolbar>
+                    <IconButton edge={"start"} color={"inherit"} aria-label={"menu"}>
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant={"h6"}>
+                        News
+                    </Typography>
+                    <Button color={"inherit"}>Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container style={ {padding: "20px 20px"} }>
+                    <AddItemForm addItem={addTodoList} itemLabel={"List Name"}/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {todoLists.map((tdl) => {
+                        let tasksForTodoList = tasksObj[tdl.id];
+                        if (tdl.filter === "completed") {
+                            tasksForTodoList = tasksForTodoList.filter(t => t.isDone === true)
+                        }
+                        if (tdl.filter === "active") {
+                            tasksForTodoList = tasksForTodoList.filter(t => t.isDone === false)
+                        }
+                        // console.log(tasksForTodoList);
 
-            })
-            }
+                        return <Grid>
+                            <Paper elevation={3} style={ {padding: "20px"} }>
+                                <TodoList key={tdl.id}
+                                          id={tdl.id}
+                                          title={tdl.name}
+                                          tasks={tasksForTodoList}
+                                          removeTask={removeTask}
+                                          changeFilter={changeFilter}
+                                          addTask={addTask}
+                                          changeTaskStatus={changeTaskStatus}
+                                          changeTaskTitle={changeTaskTitle}
+                                          filter={tdl.filter}
+                                          removeTodoList={removeTodoList}
+                                          changeTodoListName={changeTodoListName}
+                                />
+                            </Paper>
+                        </Grid>
+
+                    })
+                    }
+                </Grid>
+
+            </Container>
 
             {/*<Counter />*/}
 
