@@ -9,9 +9,10 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import {Menu} from "@mui/icons-material";
 
 export type FilterValuesType = "all" | "completed" | "active";
-type TodoListType = {
+
+export type TodoListType = {
     id: string
-    name: string
+    title: string
     filter: FilterValuesType
 }
 type TasksStateType = {
@@ -71,8 +72,8 @@ function App() {
     const todoListsId2 = v1();
 
     let [todoLists, setTodoList] = useState<Array<TodoListType>>([
-        {id: todoListsId1, name: "What to learn", filter: "all"},
-        {id: todoListsId2, name: "What to buy", filter: "all"},
+        {id: todoListsId1, title: "What to learn", filter: "all"},
+        {id: todoListsId2, title: "What to buy", filter: "all"},
     ])
 
     let removeTodoList = (todoListId: string) => {
@@ -89,7 +90,7 @@ function App() {
         // let tasks = tasksObj[todoListId];
         let todoList = todoLists.find((tl) => tl.id === todoListId);
         if (todoList) {
-            todoList.name = newTitle;
+            todoList.title = newTitle;
             setTodoList([...todoLists]);
         }
     }
@@ -98,7 +99,7 @@ function App() {
         // let newTodoListID = v1();
         let newTodoList: TodoListType = {
             id: v1(),
-            name: title,
+            title: title,
             filter: "all"
         };
         setTodoList([newTodoList, ...todoLists]);
@@ -161,7 +162,7 @@ function App() {
                             <Paper elevation={3} style={ {padding: "20px"} }>
                                 <TodoList key={tdl.id}
                                           id={tdl.id}
-                                          title={tdl.name}
+                                          title={tdl.title}
                                           tasks={tasksForTodoList}
                                           removeTask={removeTask}
                                           changeFilter={changeFilter}
