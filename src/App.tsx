@@ -97,6 +97,7 @@ function App() {
 
     function addTodoList(title: string) {
         // let newTodoListID = v1();
+        alert("addTodoList");
         let newTodoList: TodoListType = {
             id: v1(),
             title: title,
