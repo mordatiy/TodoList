@@ -35,12 +35,12 @@ export const todoListsReducer = (state: Array<TodoListType>, action: ActionTypes
         }
         case "ADD-TODOLIST": {
             return [
-                ...state,
                 {
                     id: action.id,
                     title: action.title,
                     filter: "all"
                 },
+                ...state,
             ];
 
         }

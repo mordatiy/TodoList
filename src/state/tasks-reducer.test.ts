@@ -118,6 +118,7 @@ test('new property with new array should be added when new todolist added', () =
     ];
 
     const action = addTodoListAC("title no matter");
+    // console.log(action)
     const endTodoListState = todoListsReducer(startTodoListState, action);
     const endTaskState = tasksReducer(startTaskState, action);
 
@@ -130,7 +131,7 @@ test('new property with new array should be added when new todolist added', () =
     // expect(keys.length).toBe(2);
 
     expect(keys.length).toBe(3)
-    expect(endTodoListState[2].id).toBe(action.id);
+    expect(endTodoListState[0].id).toBe(action.id);
     expect(endTaskState[action.id]).toStrictEqual([]);
 });
 
